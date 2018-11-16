@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define CLI_IP_ADDR "INPUT IP ADDRESS!!" /* IP address to send data*/
+#define CLI_IP_ADDR "0.0.0.0" /* IP address to send data*/
 #define BUF_SIZE 512
 
 int main() {
