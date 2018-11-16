@@ -85,9 +85,6 @@ int main() {
                         exit(1);
                 }
 
-                printf("Success to send %s (%d byte) to %s\n", sbuf, count,
-                       CLI_IP_ADDR);
-
                 /* Receive data*/
                 sktlen = sizeof skt;
                 memset(buf, 0, sizeof(buf));
