@@ -15,21 +15,27 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
+#define BUF_SIZE 512
+
 int main() {
-        int s, count;
+        int s; /* File descripter of socket*/
+        int count; /* Byte size of sent data*/
         in_port_t myport, port;
         struct sockaddr_in myskt, skt;
-        char sbuf[512], buf[512], c;
-        socklen_t sktlen;
+        char sbuf[BUF_SIZE], buf[BUF_SIZE];
+        socklen_t sktlen; /* Size of skt*/
 
+        /* Set port*/
         myport = 12345;
         port = 12345;
 
+        /* Generate socket*/
         if ((s = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
                 perror("socket");
                 exit(1);
         }
 
+        /* Initialize myskt and allocate socket address*/
         memset(&myskt, 0, sizeof myskt);
         myskt.sin_family = AF_INET;
         myskt.sin_port = htons(myport);
@@ -40,6 +46,7 @@ int main() {
         }
 
         while (1) {
+                /* Receive data*/
                 sktlen = sizeof skt;
                 memset(buf, 0, sizeof(buf));
                 if ((count = recvfrom(s, buf, sizeof buf, 0,
@@ -50,6 +57,7 @@ int main() {
                 printf("Sent from %s: %s (%d byte)\n", inet_ntoa(skt.sin_addr)
                        , buf, strlen(buf));
 
+                /* Send data*/
                 if ((count = sendto(s, buf, sizeof buf, 0,
                                     (struct sockaddr *)&skt, sizeof skt)) < 0) {
                         perror("sendto");
