@@ -18,22 +18,18 @@ int main() {
 	in_port_t myport, port;
 	struct sockaddr_in myskt, skt;
 	unsigned long ipaddr;
-	char sbuf[512], c;
+	char sbuf[512], buf[512];
 	int position = 0;
+	socklen_t sktlen;
 
 	myport = 49151;
 	port = 49152;
-	ipaddr = 13111310853ul;
+	ipaddr = 13111311053ul;
 
 	/*Input data.*/
-	while ((c = getchar()) != EOF) {
-		if (c == '\n') continue;
-		else {
-			sbuf[position++] = c;
-		}
-	}
+    scanf("%s", sbuf);
 
-	datalen = position;
+	datalen = 512;
 
 	if ((s = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
 			perror("socket");
@@ -58,4 +54,14 @@ int main() {
 				perror("sendto");
 				exit(1);
 			}
+		printf("count = %d", count);
+
+		/* Receive*/
+		sktlen = sizeof skt;
+		if ((count = recvfrom(s, buf, sizeof buf, 0,
+							  (struct sockaddr *)&skt, &sktlen)) < 0) {
+			perror("recvfrom");
+			exit(1);
+		}
+		printf("%s\n", buf);
 }
