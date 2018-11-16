@@ -75,7 +75,7 @@ int main() {
                         exit(1);
                 }
 
-                datalen = strlen(sbuf);
+                datalen = strlen(sbuf) - 1;
 
                 /* Send data*/
                 if ((count = sendto(s, sbuf, datalen, 0,
