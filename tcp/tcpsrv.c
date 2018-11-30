@@ -1,5 +1,5 @@
 /**
- * @brieg tcpsrv.c TCPで通信するサーバ。
+ * @brieg Server communicating over TCP.
  * @author ayakatakuriko
  * @date 2018/11/27
  */
@@ -35,11 +35,13 @@ int main() {
         myskt.sin_family = AF_INET;
         myskt.sin_port = htons(myport);
         myskt.sin_addr.s_addr = INADDR_ANY;
+		
         if (bind(s, (struct sockaddr *)&myskt, sizeof myskt) < 0) {
                 perror("bind");
                 exit(1);
         }
 
+		/* Prepare for receiving data*/
         if (listen(s, 5) < 0) {
                 perror("listen");
                 exit(1);
@@ -52,7 +54,7 @@ int main() {
                         perror("accept");
                         exit(1);
                 }
-                fprintf(stderr, "---Connection establishment---\n");
+                fprintf(stderr, "---Connection established---\n");
 
                 while (1) {
                         /* Receive data*/
@@ -70,9 +72,10 @@ int main() {
                                 exit(1);
                         }
 
+						/* If flag = 0, terminate connection*/
                         flag = strncmp(buf, END, count);
                         if (!flag) {
-                                fprintf(stderr, "Conecction terminated...\n");
+                                fprintf(stderr, "Connection terminated...\n");
                                 close(s2);
                                 break;
                         }
