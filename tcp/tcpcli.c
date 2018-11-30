@@ -1,5 +1,5 @@
 /**
- * @brieg tcpsrv.c TCPで通信するクライアント。標準入力からの入力をサーバに送信する。
+ * @brief tcpsrv.c TCPで通信するクライアント。標準入力からの入力をサーバに送信する。
  * Ctrl-Dでコネクションを切る。
  * @author ayakatakuriko
  * @date 2018/11/27
